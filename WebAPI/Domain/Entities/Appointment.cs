@@ -2,9 +2,9 @@
 {
     class Appointment
     {
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
-        public int doctorId { get; set; }
-        public int userId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int DoctorId { get; set; }
+        public int UserId { get; set; }
     }
 }
