@@ -2,7 +2,7 @@
 {
     enum Role
     {
-        patient,
-        admin,
+        Patient,
+        Admin,
     }
 }
