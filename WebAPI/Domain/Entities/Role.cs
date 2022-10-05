@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    enum Role
+    public enum Role
     {
         Patient,
         Admin,
