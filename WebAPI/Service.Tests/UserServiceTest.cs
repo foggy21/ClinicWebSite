@@ -1,4 +1,6 @@
 using Domain.Entities;
+using Domain.RepositoryInterfaces;
+using Moq;
 using Service.Implementations;
 
 namespace Service.Tests
@@ -6,17 +8,20 @@ namespace Service.Tests
     public class UserServiceTest
     {
         private readonly UserService _userService;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
 
         public UserServiceTest(UserService userService)
         {
-            _userService = userService;
+            _userRepositoryMock = new Mock<IUserRepository>();
+            _userService = new UserService(_userRepositoryMock.Object);
         }   
 
         [Fact]
-        public void CheckUserWithIncorrectLogin_Fail()
+        public void CheckUserWithIncorrectData_Fail()
         {
             string loginTest = "NoobMaster69";
-            string passwordTest = "12345678";
+            string passwordTest = "erretewrt";
+            _userRepositoryMock.Setup(repository => repository.GetByLoginAndPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(() => false);
 
             var result = _userService.CheckUser(loginTest, passwordTest);
 
@@ -24,10 +29,10 @@ namespace Service.Tests
         }
 
         [Fact]
-        public void CheckUserWithIncorrectPassword_Fail()
+        public void CheckUserWithEmptyPassword_Fail()
         {
             string loginTest = "MisterDoctor";
-            string passwordTest = "SuperDoctor";
+            string passwordTest = string.Empty;
 
             var result = _userService.CheckUser(loginTest, passwordTest);
 
@@ -47,22 +52,12 @@ namespace Service.Tests
         }
 
         [Fact]
-        public void CheckUserEmptyPassword_Fail()
-        {
-            string loginTest = "MisterDoctor";
-            string passwordTest = "";
-
-            var result = _userService.CheckUser(loginTest, passwordTest);
-
-            Assert.False(result.Value);
-
-        }
-
-        [Fact]
         public void CheckUserTest_Verify()
         {
             string loginTest = "MisterDoctor";
             string passwordTest = "Super%%Doctor$$";
+
+            _userRepositoryMock.Setup(repository => repository.GetByLoginAndPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(() => true);
 
             var result = _userService.CheckUser(loginTest, passwordTest);
 
@@ -89,6 +84,9 @@ namespace Service.Tests
             string passwordTest = "Super%%Doctor$$";
             string phoneTest = "89123332211";
             Role roleTest = Role.Admin;
+
+            _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<User>())).Returns(() => null);
+
 
             var result = _userService.CreateUser(loginTest,passwordTest, phoneTest, roleTest);
 
@@ -117,6 +115,8 @@ namespace Service.Tests
             Role roleTest = Role.Patient;
             StatusCode statusCodeTest = StatusCode.OK;
 
+            _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<User>()))
+                .Returns(() => new User(loginTest, phoneTest, roleTest));
 
             var result = _userService.CreateUser(loginTest, passwordTest, phoneTest, roleTest);
 
@@ -140,6 +140,8 @@ namespace Service.Tests
         {
             string loginTest = "NoobMaster69";
 
+            _userRepositoryMock.Setup(repository => repository.GetByLogin(It.IsAny<string>())).Returns(() => null);
+
             var result = _userService.GetUserByLogin(loginTest);
 
             Assert.Null(result.Value);
@@ -149,7 +151,12 @@ namespace Service.Tests
         public void GetUserByLoginTest_Verify()
         {
             string loginTest = "MisterDoctor";
+            string phoneTest = "89123332211";
+            Role roleTest = Role.Admin;
             StatusCode statusCodeTest = StatusCode.OK;
+
+            _userRepositoryMock.Setup(repository => repository.GetByLogin(It.IsAny<string>()))
+                .Returns(() => new User(loginTest, phoneTest, roleTest));
 
             var result = _userService.GetUserByLogin(loginTest);
 

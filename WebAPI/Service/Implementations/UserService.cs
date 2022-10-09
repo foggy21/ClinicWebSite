@@ -58,15 +58,15 @@ namespace Service.Implementations
                     result.StatusCode = StatusCode.BadRequest;
                     return result;
                 }
-                result = GetUserByLogin(login);
-                if (result.Value != null)
+                User user = _userRepository.GetByLogin(login);
+                if (user.Name != null)
                 {
                     result.Description = "Username is already taken.";
                     result.StatusCode = StatusCode.BadRequest;
                     return result;
                 }
-                _userRepository.CreateUser(login, password, phone, role);
                 result.StatusCode = StatusCode.OK;
+                result.Value = _userRepository.CreateUser(login, password, phone, role);
                 return result;
             } 
             catch(Exception e)
