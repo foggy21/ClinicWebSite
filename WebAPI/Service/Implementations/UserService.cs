@@ -1,5 +1,5 @@
-﻿using DAL.Interfaces;
-using Domain.Entities;
+﻿using Domain.Entities;
+using Domain.RepositoryInterfaces;
 using Domain.Response;
 using Service.Interfaces;
 
@@ -22,15 +22,14 @@ namespace Service.Implementations
             var result = new Result<bool>();
             try
             {
-                var user = _userRepository.GetByLoginAndPassword(login, password);
-                if (user == false)
+                var isCorrectUser = _userRepository.GetByLoginAndPassword(login, password);
+                if (isCorrectUser == false)
                 {
                     result.Description = "Login or password aren't correct.";
                     result.StatusCode = StatusCode.BadRequest;
                     return result;
                 }
-
-                result.Value = user;
+                result.Value = isCorrectUser;
                 result.StatusCode = StatusCode.OK;
                 return result;
             } 
@@ -46,7 +45,7 @@ namespace Service.Implementations
         public Result<User> CreateUser(string login, string password, string phone, Role role)
         {
             //TODO:
-            // 1. Записать поля в репозиторий
+            // 1. Проверить на корректность логин и пароль.
             // 2. Создать объект User
             // 3. Записать в объект поля свежеиспечённого User'a.
             // 4. Вернуть объект User.
@@ -59,8 +58,15 @@ namespace Service.Implementations
                     result.StatusCode = StatusCode.BadRequest;
                     return result;
                 }
-                _userRepository.CreateUser(login, password, phone, role);
                 result = GetUserByLogin(login);
+                if (result.Value != null)
+                {
+                    result.Description = "Username is already taken.";
+                    result.StatusCode = StatusCode.BadRequest;
+                    result.Value = null;
+                    return result;
+                }
+                _userRepository.CreateUser(login, password, phone, role);
                 result.StatusCode = StatusCode.OK;
                 return result;
             } 
