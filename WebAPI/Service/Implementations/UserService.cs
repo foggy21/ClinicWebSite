@@ -23,13 +23,13 @@ namespace Service.Implementations
             try
             {
                 var isCorrectUser = _userRepository.GetByLoginAndPassword(login, password);
-                if (isCorrectUser == false)
+                result.Value = isCorrectUser;
+                if (result.Value == false)
                 {
                     result.Description = "Login or password aren't correct.";
                     result.StatusCode = StatusCode.BadRequest;
                     return result;
                 }
-                result.Value = isCorrectUser;
                 result.StatusCode = StatusCode.OK;
                 return result;
             } 
@@ -63,7 +63,6 @@ namespace Service.Implementations
                 {
                     result.Description = "Username is already taken.";
                     result.StatusCode = StatusCode.BadRequest;
-                    result.Value = null;
                     return result;
                 }
                 _userRepository.CreateUser(login, password, phone, role);
@@ -88,6 +87,12 @@ namespace Service.Implementations
             var result = new Result<User>();
             try
             {
+                if (string.IsNullOrEmpty(login))
+                {
+                    result.Description = "Username isn't correct.";
+                    result.StatusCode = StatusCode.BadRequest;
+                    return result;
+                }
                 var user = _userRepository.GetByLogin(login);
                 if (user == null)
                 {
