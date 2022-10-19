@@ -11,7 +11,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void CreateUser(string login, string password, string phone, Role role)
+        public User CreateUser(string login, string password, string phone, Role role)
         {
             throw new NotImplementedException();
             // TODO:

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    class Timetable
+    public class Timetable
     {
         public int DoctorId { get; set; }
         public DateTime StartWorkDay { get; set; }

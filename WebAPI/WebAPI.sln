@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C51888CC-6F0F-45A2-ABF4-7E0AA7D4C07B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{67867D27-1196-4DD0-8FC4-028509CEE085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{67867D27-1196-4DD0-8FC4-028509CEE085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{28215DA1-42D2-42DD-A2B8-29DAC07A458C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{28215DA1-42D2-42DD-A2B8-29DAC07A458C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tests", "Service.Tests\Service.Tests.csproj", "{562BDE48-B9E1-467F-8FA8-BBF4E78B939B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{28215DA1-42D2-42DD-A2B8-29DAC07A458C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28215DA1-42D2-42DD-A2B8-29DAC07A458C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28215DA1-42D2-42DD-A2B8-29DAC07A458C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{562BDE48-B9E1-467F-8FA8-BBF4E78B939B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{562BDE48-B9E1-467F-8FA8-BBF4E78B939B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{562BDE48-B9E1-467F-8FA8-BBF4E78B939B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{562BDE48-B9E1-467F-8FA8-BBF4E78B939B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

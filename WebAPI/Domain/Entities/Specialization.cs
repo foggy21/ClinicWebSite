@@ -1,8 +1,13 @@
 ﻿namespace Domain.Entities
 {
-    class Specialization
+    public class Specialization
     {
         public int Id { get; set; }
-        public string NameOfSpecialization { get; set; }
+        public string? NameOfSpecialization { get; set; }
+
+        public Specialization(string? nameOfSpecialization)
+        {
+            NameOfSpecialization = nameOfSpecialization;
+        }
     }
 }
