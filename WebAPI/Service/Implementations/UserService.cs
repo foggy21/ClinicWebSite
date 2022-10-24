@@ -28,9 +28,11 @@ namespace Service.Implementations
                 {
                     result.Description = "Login or password aren't correct.";
                     result.StatusCode = StatusCode.BadRequest;
+                    result.Value = false;
                     return result;
                 }
                 result.StatusCode = StatusCode.OK;
+                result.Value = true;
                 return result;
             } 
             catch (Exception e)
@@ -100,8 +102,8 @@ namespace Service.Implementations
                     result.StatusCode = StatusCode.NotFound;
                     return result;
                 }
-                result.Value = user;
                 result.StatusCode = StatusCode.OK;
+                result.Value = user;
                 return result;
             }
             catch(Exception e)

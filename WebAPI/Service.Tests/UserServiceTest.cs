@@ -10,7 +10,7 @@ namespace Service.Tests
         private readonly UserService _userService;
         private readonly Mock<IUserRepository> _userRepositoryMock;
 
-        public UserServiceTest(UserService userService)
+        public UserServiceTest()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
             _userService = new UserService(_userRepositoryMock.Object);
@@ -85,7 +85,8 @@ namespace Service.Tests
             string phoneTest = "89123332211";
             Role roleTest = Role.Admin;
 
-            _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<User>())).Returns(() => null);
+            _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Role>()))
+                .Returns(() => null);
 
 
             var result = _userService.CreateUser(loginTest,passwordTest, phoneTest, roleTest);
@@ -115,7 +116,7 @@ namespace Service.Tests
             Role roleTest = Role.Patient;
             StatusCode statusCodeTest = StatusCode.OK;
 
-            _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<User>()))
+            _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Role>()))
                 .Returns(() => new User(loginTest, phoneTest, roleTest));
 
             var result = _userService.CreateUser(loginTest, passwordTest, phoneTest, roleTest);
