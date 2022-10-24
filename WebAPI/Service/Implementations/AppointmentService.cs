@@ -28,7 +28,7 @@ namespace Service.Implementations
             try
             {
 
-                var listOfDates = _appointmentRepository.SelectFreeDatesForSpecialization(specialization);
+                var listOfDates = _appointmentRepository.SelectDatesForSpecialization(specialization);
                 if (specialization.NameOfSpecialization == null || specialization.NameOfSpecialization == string.Empty)
                 {
                     result.Description = "Name of specialization is empty";
@@ -36,15 +36,13 @@ namespace Service.Implementations
                     return result;
                 }
 
-                foreach (char item in specialization.NameOfSpecialization)
+                if (specialization.Id is null)
                 {
-                    if (char.IsDigit(item))
-                    {
-                        result.Description = "Name of specialization contains digit";
-                        result.StatusCode = StatusCode.BadRequest;
-                        return result;
-                    }
+                    result.Description = "Name of specialization is not exists";
+                    result.StatusCode = StatusCode.BadRequest;
+                    return result;
                 }
+                
 
                 if (!listOfDates.Any())
                 {
@@ -93,7 +91,7 @@ namespace Service.Implementations
                     result.Value = false;
                     return result;
                 }
-                _appointmentRepository.UpdateAppointment(doctor, date);
+                _appointmentRepository.CreateAppointment(doctor, date);
                 result.StatusCode = StatusCode.OK;
                 result.Value = true;
                 return result;
@@ -133,7 +131,7 @@ namespace Service.Implementations
                     result.Value = false;
                     return result;
                 }
-                _appointmentRepository.UpdateAppointmentToAnyDoctor(specialization, date);
+                _appointmentRepository.CreateAppointmentToAnyDoctor(specialization, date);
                 result.StatusCode = StatusCode.OK;
                 result.Value = true;
                 return result;

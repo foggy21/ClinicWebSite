@@ -20,7 +20,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public List<DateTime> SelectFreeDatesForSpecialization(Specialization specialization)
+        public List<DateTime> SelectDatesForSpecialization(Specialization specialization)
         {
             throw new NotImplementedException();
         }
@@ -35,12 +35,12 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public bool UpdateAppointment(Doctor doctor, DateTime date)
+        public bool CreateAppointment(Doctor doctor, DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateAppointmentToAnyDoctor(Specialization specialization, DateTime date)
+        public bool CreateAppointmentToAnyDoctor(Specialization specialization, DateTime date)
         {
             throw new NotImplementedException();
         }
