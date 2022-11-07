@@ -35,7 +35,7 @@ namespace Service.Tests
         [Fact]
         public void GetFreeDatesForSpecializationWithEmptyList_Fail()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.SelectFreeDatesForSpecialization(It.IsAny<Specialization>())).
+            _appointmentRepositoryMock.Setup(repository => repository.SelectDatesForSpecialization(It.IsAny<Specialization>())).
                 Returns(() => null);
             var result = _appointmentService.GetFreeDatesForSpecialization(It.IsAny<Specialization>());
             Assert.Null(result.Value);
@@ -44,14 +44,18 @@ namespace Service.Tests
         [Fact]
         public void GetFreeDatesForSpecialization_Verify()
         {
-            var result = _appointmentService.GetFreeDatesForSpecialization(It.IsAny<Specialization>());
+            Specialization specialization = new Specialization("1");
+            specialization.Id = 1;
+            _appointmentRepositoryMock.Setup(repository => repository.SelectDatesForSpecialization(It.IsAny<Specialization>())).
+                Returns(() => new List<DateTime>());
+            var result = _appointmentService.GetFreeDatesForSpecialization(specialization);
             Assert.NotNull(result.Value);
         }
 
         [Fact]
         public void SaveAppointmentWithEmptyList_Fail()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.UpdateAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>())).Returns(() => false);
+            _appointmentRepositoryMock.Setup(repository => repository.CreateAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>())).Returns(() => false);
             var result = _appointmentService.SaveAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>());
             Assert.False(result.Value);
         }
@@ -59,7 +63,7 @@ namespace Service.Tests
         [Fact]
         public void SaveAppointmentWithNoDate_Fail()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.UpdateAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>())).Returns(() => false);
+            _appointmentRepositoryMock.Setup(repository => repository.CreateAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>())).Returns(() => false);
             var result = _appointmentService.SaveAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>());
             Assert.False(result.Value);
         }
@@ -68,13 +72,13 @@ namespace Service.Tests
         public void SaveAppointment_Verify()
         {
             var result = _appointmentService.SaveAppointment(It.IsAny<Doctor>(), It.IsAny<DateTime>());
-            Assert.False(result.Value);
+            Assert.True(result.Value);
         }
 
         [Fact]
         public void SaveAppointmentToAnyDoctorhEmptyList_Fail()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.UpdateAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>())).Returns(() => false);
+            _appointmentRepositoryMock.Setup(repository => repository.CreateAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>())).Returns(() => false);
             var result = _appointmentService.SaveAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>());
             Assert.False(result.Value);
         }
@@ -82,7 +86,7 @@ namespace Service.Tests
         [Fact]
         public void SaveAppointmentToAnyDoctorWithNoDate_Fail()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.UpdateAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>())).Returns(() => false);
+            _appointmentRepositoryMock.Setup(repository => repository.CreateAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>())).Returns(() => false);
             var result = _appointmentService.SaveAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>());
             Assert.False(result.Value);
         }
@@ -91,7 +95,7 @@ namespace Service.Tests
         public void SaveAppointmentToAnyDoctor_Verify()
         {
             var result = _appointmentService.SaveAppointmentToAnyDoctor(It.IsAny<Specialization>(), It.IsAny<DateTime>());
-            Assert.False(result.Value);
+            Assert.True(result.Value);
         }
 
     }

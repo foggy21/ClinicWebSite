@@ -27,14 +27,14 @@ namespace Service.Implementations
             var result = new Result<List<DateTime>>();
             try
             {
-
-                var listOfDates = _appointmentRepository.SelectDatesForSpecialization(specialization);
-                if (specialization.NameOfSpecialization == null || specialization.NameOfSpecialization == string.Empty)
+                if (specialization == null || specialization.NameOfSpecialization == string.Empty)
                 {
                     result.Description = "Name of specialization is empty";
                     result.StatusCode = StatusCode.BadRequest;
                     return result;
                 }
+
+                var listOfDates = _appointmentRepository.SelectDatesForSpecialization(specialization);
 
                 if (specialization.Id is null)
                 {
@@ -44,11 +44,11 @@ namespace Service.Implementations
                 }
                 
 
-                if (!listOfDates.Any())
+                if (listOfDates.Any())
                 {
                     result.Description = "No free dates";
                     result.StatusCode = StatusCode.NotFound;
-                    result.Value = null;
+                    return result;
                 }
 
                 result.StatusCode = StatusCode.OK;
