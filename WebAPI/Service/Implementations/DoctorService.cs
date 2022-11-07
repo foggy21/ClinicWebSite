@@ -160,6 +160,7 @@ namespace Service.Implementations
                     result.Description = "No doctors";
                     result.StatusCode = StatusCode.NotFound;
                     result.Value = null;
+                    return result;
                 }
                 result.StatusCode = StatusCode.OK;
                 result.Value = listOfDoctors;

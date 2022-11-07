@@ -103,7 +103,6 @@ namespace Service.Tests
         [Fact]
         public void GetDoctors_Verify()
         {
-            _doctorRepositoryMock.Setup(repository => repository.Select()).Returns(() => new List<Doctor>());
             var result = _doctorService.GetDoctors();
             Assert.NotNull(result.Value);
         }

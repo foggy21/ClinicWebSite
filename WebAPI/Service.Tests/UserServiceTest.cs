@@ -110,11 +110,14 @@ namespace Service.Tests
         [Fact]
         public void CreateUserTest_Verify()
         {
-            string loginTest = "testLogin";
+            string loginTest = "MisterDoctor";
             string passwordTest = "testPassWithSym$";
             string phoneTest = "89140001122";
             Role roleTest = Role.Patient;
             StatusCode statusCodeTest = StatusCode.OK;
+
+            _userRepositoryMock.Setup(repository => repository.GetByLogin(It.IsAny<string>()))
+                .Returns(() => new User(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Role>()));
 
             _userRepositoryMock.Setup(repository => repository.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Role>()))
                 .Returns(() => new User(loginTest, phoneTest, roleTest));
