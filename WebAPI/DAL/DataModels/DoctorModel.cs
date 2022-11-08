@@ -1,9 +1,9 @@
 ﻿namespace Domain.DAL
 {
-    public class Doctor
+    public class DoctorModel
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public Specialization? Specialization { get; }
+        public  SpecializationModel specialization { get; }
     }
 }

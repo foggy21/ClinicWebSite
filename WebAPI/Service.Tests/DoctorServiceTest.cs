@@ -55,7 +55,7 @@ namespace Service.Tests
         public void DeleteDoctor_Verify()
         {
             Doctor doctor = new Doctor("John Hetcher", It.IsAny<Specialization>());
-            _doctorRepositoryMock.Setup(repository => repository.FindDoctorById(It.IsAny<int?>())).Returns(() => new Doctor("John Hetcher", It.IsAny<Specialization>()));
+            _doctorRepositoryMock.Setup(repository => repository.FindDoctorById(It.IsAny<int?>())).Returns((Delegate)(() => new Doctor("John Hetcher", It.IsAny<Specialization>())));
             var result = _doctorService.DeleteDoctor(doctor);
             Assert.True(result.Value);
         }
@@ -71,7 +71,7 @@ namespace Service.Tests
         public void GetDoctorById_Verify()
         {
             Doctor doctor = new Doctor("John Hetcher", It.IsAny<Specialization>());
-            _doctorRepositoryMock.Setup(repository => repository.FindDoctorById(It.IsAny<int?>())).Returns(() => new Doctor("John Hetcher", It.IsAny<Specialization>()));
+            _doctorRepositoryMock.Setup(repository => repository.FindDoctorById(It.IsAny<int?>())).Returns((Delegate)(() => new Doctor("John Hetcher", It.IsAny<Specialization>())));
             var result = _doctorService.GetDoctorById(It.IsAny<int?>());
             Assert.NotNull(result.Value);
         }

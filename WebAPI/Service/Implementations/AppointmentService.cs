@@ -91,10 +91,22 @@ namespace Service.Implementations
                     result.Value = false;
                     return result;
                 }
-                _appointmentRepository.CreateAppointment(doctor, date);
-                result.StatusCode = StatusCode.OK;
-                result.Value = true;
-                return result;
+
+                if (listOfFreeDates.Value[0] <= date && date <= listOfFreeDates.Value[-1])
+                {
+                    _appointmentRepository.CreateAppointment(doctor, date);
+                    result.StatusCode = StatusCode.OK;
+                    result.Value = true;
+                    return result;
+                }
+                else
+                {
+                    result.Description = "Date is out of range of free dates";
+                    result.StatusCode = StatusCode.BadRequest;
+                    result.Value = false;
+                    return result;
+                }
+                
             }
             catch (Exception e)
             {

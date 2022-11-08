@@ -1,6 +1,6 @@
 ﻿namespace Domain.DAL
 {
-    public class Timetable
+    public class TimetableModel
     {
         public int DoctorId { get; set; }
         public DateTime StartWorkDay { get; set; }
