@@ -1,63 +1,66 @@
 ﻿using Domain.RepositoryInterfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using DAL.Converts;
 
 namespace DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ApplicationDbContext _db;
+
+        public UserRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public void Create(User entity)
         {
-            throw new NotImplementedException();
+            _db.AddAsync(entity);
+            _db.SaveChangesAsync();
         }
 
         public User CreateUser(string login, string password, string phone, Role role)
         {
-            throw new NotImplementedException();
-            // TODO:
-            // Вставить в БД соответствующие поля из аргуменов
+            User user = new(login, password, password, role);
+            _db.AddAsync(user);
+            _db.SaveChangesAsync();
+            return user;
         }
 
         public void Delete(User entity)
         {
-            throw new NotImplementedException();
+            _db.Remove(entity);
+            _db.SaveChangesAsync();
         }
 
         public User Get(int id)
         {
-            throw new NotImplementedException();
+            var user = _db.User.FirstOrDefault(u => u.Id == id);
+            return user?.ToDomain();
         }
 
         public User GetByLogin(string name)
         {
-            // TODO:
-            // 1. Заправшивать у базы данных соответсвующий логин из параметра.
-            // 2. Если логина нет - вернуть null.
-            // 3. Если логин есть - создать объект User и передать ему поля из таблицы.
-            // 4. Вернуть объект User.
-            throw new NotImplementedException();
+            var user = _db.User.FirstOrDefault(u => u.Name == name);
+            return user?.ToDomain();
         }
 
         public bool GetByLoginAndPassword(string login, string password)
         {
-            // TODO:
-            // 1. Запрашивать у базы данных соответсвующий логин и пароль из параметра.
-            // 2. Если не совпал логин - вернуть false.
-            // 3. Захешировать пароль из параметра.
-            // 4. Проверить хеш пароля из параметра с хешом пароля из БД.
-            // 5. Если хеши не совпали - вернуть false.
-            // 6. Вернуть true.
-            throw new NotImplementedException();
+            var user = _db.User.FirstOrDefault(u => (u.Name == login && u.Password == password));
+            return true;
         }
 
         public IEnumerable<User> Select()
         {
-            throw new NotImplementedException();
+            return (IEnumerable<User>)_db.User.ToList();
         }
 
         public void Update(User entity)
         {
-            throw new NotImplementedException();
+            _db.Update(entity);
+            _db.SaveChangesAsync();
         }
     }
 }
