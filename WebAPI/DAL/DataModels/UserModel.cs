@@ -1,4 +1,6 @@
-﻿namespace Domain.DAL
+﻿using Domain.Entities;
+
+namespace Domain.DAL
 {
     public class UserModel
     { 

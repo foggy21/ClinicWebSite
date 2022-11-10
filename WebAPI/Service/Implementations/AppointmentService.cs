@@ -44,7 +44,7 @@ namespace Service.Implementations
                 }
                 
 
-                if (listOfDates.Any())
+                if (!listOfDates.Any())
                 {
                     result.Description = "No free dates";
                     result.StatusCode = StatusCode.NotFound;
@@ -76,7 +76,7 @@ namespace Service.Implementations
             {
                 var listOfFreeDates = GetFreeDatesForSpecialization(doctor.Specialization);
 
-                if (listOfFreeDates.Value == null || !listOfFreeDates.Value.Any())
+                if (listOfFreeDates.Value == null)
                 {
                     result.Description = "List of date is empty";
                     result.StatusCode = StatusCode.BadRequest;
@@ -91,22 +91,10 @@ namespace Service.Implementations
                     result.Value = false;
                     return result;
                 }
-
-                if (listOfFreeDates.Value[0] <= date && date <= listOfFreeDates.Value[-1])
-                {
-                    _appointmentRepository.CreateAppointment(doctor, date);
-                    result.StatusCode = StatusCode.OK;
-                    result.Value = true;
-                    return result;
-                }
-                else
-                {
-                    result.Description = "Date is out of range of free dates";
-                    result.StatusCode = StatusCode.BadRequest;
-                    result.Value = false;
-                    return result;
-                }
-                
+                _appointmentRepository.CreateAppointment(doctor, date);
+                result.StatusCode = StatusCode.OK;
+                result.Value = true;
+                return result;
             }
             catch (Exception e)
             {

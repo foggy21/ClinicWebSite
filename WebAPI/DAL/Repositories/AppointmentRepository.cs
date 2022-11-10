@@ -37,14 +37,11 @@ namespace DAL.Repositories
         public List<DateTime> SelectDatesForSpecialization(Specialization specialization)
         {
             List<DateTime> dateTimes = new List<DateTime>();
+            var doctor = _db.Doctor.FirstOrDefault(doc => doc.specialization.Id == specialization.Id);
             var appointmentForSpecialization = _db.Appointments.ToList();
             for (int i = 0; i < appointmentForSpecialization.Count; ++i)
             {
-                if (_db.Appointments.FirstOrDefault(a => a.DoctorId == appointmentForSpecialization[i].DoctorId) == null)
-                {
-                    appointmentForSpecialization.Remove(appointmentForSpecialization[i]);
-                }
-                else
+                if (_db.Appointments.FirstOrDefault(a => doctor.Id == appointmentForSpecialization[i].DoctorId) != null)
                 {
                     dateTimes.Add(appointmentForSpecialization[i].AppointmentTime);
                 }
