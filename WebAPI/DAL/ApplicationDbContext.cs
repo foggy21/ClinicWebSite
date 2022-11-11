@@ -9,14 +9,14 @@ namespace DAL
         public DbSet<DoctorModel> Doctor { get; set; }
         public DbSet<AppointmentModel> Appointments { get; set; }
         public DbSet<TimetableModel> Timetable { get; set; }
+        public DbSet<SpecializationModel> Specializations { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> contextOptions)
+        public ApplicationDbContext(DbContextOptions options) : base(options) {}
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Database.EnsureCreated();
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=clinicdb;Username=postgres;Password=#Foggy38515825");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UserModel>().HasIndex(model => model.Name);
         }
     }
 }
