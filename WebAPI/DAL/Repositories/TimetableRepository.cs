@@ -15,22 +15,22 @@ namespace DAL.Repositories
 
         public void Create(Timetable entity)
         {
-            _db.AddAsync(entity);
-            _db.SaveChangesAsync();
+            _db.Add(entity);
+            _db.SaveChanges();
         }
 
         public bool InsertTimetable(Doctor doctor, DateTime startWork, DateTime endWork)
         {
             Timetable timetable = new(doctor.Id, startWork, endWork);
-            _db.AddAsync(timetable);
-            _db.SaveChangesAsync();
+            _db.Add(timetable);
+            _db.SaveChanges();
             return true;
         }
 
         public void Delete(Timetable entity)
         {
             _db.Remove(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public Timetable Get(int id)
@@ -62,14 +62,14 @@ namespace DAL.Repositories
         public void Update(Timetable entity)
         {
             _db.Update(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public bool UpdateTimetable(Doctor doctor, DateTime startWork, DateTime endWork)
         {
             Timetable timetable = new(doctor.Id, startWork, endWork);
             _db.Update(timetable);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
             return true;
         }
     }
