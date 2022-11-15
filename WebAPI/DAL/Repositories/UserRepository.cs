@@ -16,22 +16,22 @@ namespace DAL.Repositories
 
         public void Create(User entity)
         {
-            _db.AddAsync(entity);
-            _db.SaveChangesAsync();
+            _db.Add(entity);
+            _db.SaveChanges();
         }
 
         public User CreateUser(string login, string password, string phone, Role role)
         {
             User user = new(login, password, password, role);
-            _db.AddAsync(user);
-            _db.SaveChangesAsync();
+            _db.Add(user);
+            _db.SaveChanges();
             return user;
         }
 
         public void Delete(User entity)
         {
             _db.Remove(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public User Get(int id)
@@ -60,7 +60,7 @@ namespace DAL.Repositories
         public void Update(User entity)
         {
             _db.Update(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
     }
 }

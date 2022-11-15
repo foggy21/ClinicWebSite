@@ -16,22 +16,22 @@ namespace DAL.Repositories
 
         public void Create(Doctor entity)
         {
-            _db.AddAsync(entity);
-            _db.SaveChangesAsync();
+            _db.Add(entity);
+            _db.SaveChanges();
         }
 
         public Doctor CreateDoctor(string? name, Specialization specialization)
         {
             Doctor doctor = new(name, specialization);
-            _db.AddAsync(doctor);
-            _db.SaveChangesAsync();
+            _db.Add(doctor);
+            _db.SaveChanges();
             return doctor;
         }
 
         public void Delete(Doctor entity)
         {
             _db.Remove(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public Doctor FindDoctorById(int? id)
@@ -60,7 +60,7 @@ namespace DAL.Repositories
         public void Update(Doctor entity)
         {
             _db.Update(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
     }
 }

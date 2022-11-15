@@ -18,14 +18,14 @@ namespace DAL.Repositories
 
         public void Create(Appointment entity)
         {
-            _db.AddAsync(entity);
-            _db.SaveChangesAsync();
+            _db.Add(entity);
+            _db.SaveChanges();
         }
 
         public void Delete(Appointment entity)
         {
             _db.Remove(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public Appointment? Get(int id)
@@ -51,29 +51,22 @@ namespace DAL.Repositories
 
         public IEnumerable<Appointment> Select()
         {
-            return (IEnumerable<Appointment>)_db.Appointments.ToListAsync();
+            return (IEnumerable<Appointment>)_db.Appointments.ToList();
         }
 
         public void Update(Appointment entity)
         {
             _db.Update(entity);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public bool CreateAppointment(Doctor doctor, DateTime date)
         {
-            var appointment = _db.Appointments.FirstOrDefault(a => (a.DoctorId == doctor.Id) && (a.StartDay <= date && date <= a.EndDay));
-            if (appointment != null)
-            {
-                appointment.AppointmentTime = date;
-                _db.AddAsync(appointment);
-                _db.SaveChangesAsync();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var appointment = _db.Appointments.FirstOrDefault(a => a.DoctorId == doctor.Id);
+            appointment.AppointmentTime = date;
+            _db.Add(appointment);
+            _db.SaveChanges();
+            return true;
         }
 
         public bool CreateAppointmentToAnyDoctor(Specialization specialization, DateTime date)
@@ -83,8 +76,8 @@ namespace DAL.Repositories
             if (appointment != null)
             {
                 appointment.AppointmentTime = date;
-                _db.AddAsync(appointment);
-                _db.SaveChangesAsync();
+                _db.Add(appointment);
+                _db.SaveChanges();
                 return true;
             }
             else
