@@ -7,9 +7,9 @@ namespace DAL.Converts
     {
         public static Timetable? ToDomain(this TimetableModel timetableModel)
         {
-            return new Timetable(timetableModel.DoctorId, timetableModel.StartWorkDay, timetableModel.EndWorkDay)
+            return new Timetable(timetableModel.Doctor, timetableModel.StartWorkDay, timetableModel.EndWorkDay)
             {
-                DoctorId = timetableModel.DoctorId,
+                Doctor = timetableModel.Doctor,
                 StartWorkDay = timetableModel.StartWorkDay,
                 EndWorkDay = timetableModel.EndWorkDay
             };

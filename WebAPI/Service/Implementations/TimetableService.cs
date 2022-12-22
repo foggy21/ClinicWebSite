@@ -58,21 +58,21 @@ namespace Service.Implementations
             }
         }
 
-        public Result<List<TimeOnly>> GetTimeTable(Doctor doctor, DateOnly date)
+        public Result<List<Timetable>> GetTimeTable(Doctor doctor, DateOnly date)
         {
             // TODO:
             // 1. Обратиться к репозиторию, взять расписание доктора
             // 2. Вернуть result
-            var result = new Result<List<TimeOnly>>();
+            var result = new Result<List<Timetable>>();
             try
             {
                 result.StatusCode = StatusCode.OK;
-                result.Value = _timetableRepository.SelectTimetableOnDate(doctor, date); ;
+                result.Value = _timetableRepository.SelectTimetableOnDate(doctor, date);
                 return result;
             }
             catch (Exception e)
             {
-                return new Result<List<TimeOnly>>()
+                return new Result<List<Timetable>>()
                 {
                     Description = $"[GetTimeTable] : {e.Message}"
                 };
