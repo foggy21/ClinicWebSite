@@ -2,13 +2,13 @@
 {
     public class Timetable
     {
-        public int? DoctorId { get; set; }
+        public Doctor Doctor { get; set; }
         public DateTime StartWorkDay { get; set; }
         public DateTime EndWorkDay { get; set; }
 
-        public Timetable(int? doctorId, DateTime startWorkDay, DateTime endWorkDay)
+        public Timetable(Doctor doctor, DateTime startWorkDay, DateTime endWorkDay)
         {
-            DoctorId = doctorId;
+            Doctor = doctor;
             StartWorkDay = startWorkDay;
             EndWorkDay = endWorkDay;
         }

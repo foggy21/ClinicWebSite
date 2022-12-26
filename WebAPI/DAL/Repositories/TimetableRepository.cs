@@ -21,7 +21,7 @@ namespace DAL.Repositories
 
         public bool InsertTimetable(Doctor doctor, DateTime startWork, DateTime endWork)
         {
-            Timetable timetable = new(doctor.Id, startWork, endWork);
+            Timetable timetable = new(doctor, startWork, endWork);
             _db.Add(timetable);
             _db.SaveChanges();
             return true;
@@ -35,7 +35,7 @@ namespace DAL.Repositories
 
         public Timetable Get(int id)
         {
-            var timetable = _db.Timetable.FirstOrDefault(tt => tt.DoctorId == id);
+            var timetable = _db.Timetable.FirstOrDefault(tt => tt.Id == id);
             return timetable?.ToDomain();
         }
 
@@ -44,14 +44,14 @@ namespace DAL.Repositories
             return (IEnumerable<Timetable>)_db.Timetable.ToList();
         }
 
-        public List<TimeOnly> SelectTimetableOnDate(Doctor doctor, DateOnly date)
+        public List<Timetable> SelectTimetableOnDate(Doctor doctor, DateOnly date)
         {
-            List<TimeOnly> freeTimes = new();
+            List<Timetable> freeTimes = new();
             var timetables = _db.Timetable.ToList();
             var doc = _db.Doctor.FirstOrDefault(d => d.Id == doctor.Id);
             for (int i = 0; i < timetables.Count; i++)
             {
-                if (doc.Id == timetables[i].DoctorId)
+                if (doc.Id == timetables[i].Doctor.Id)
                 {
                     freeTimes =  timetables[i]?.FreeTime;
                 }
@@ -67,7 +67,7 @@ namespace DAL.Repositories
 
         public bool UpdateTimetable(Doctor doctor, DateTime startWork, DateTime endWork)
         {
-            Timetable timetable = new(doctor.Id, startWork, endWork);
+            Timetable timetable = new(doctor, startWork, endWork);
             _db.Update(timetable);
             _db.SaveChanges();
             return true;

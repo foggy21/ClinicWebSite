@@ -18,5 +18,9 @@ namespace DAL
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserModel>().HasIndex(model => model.Name);
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=clinicdb;Username=postgres;Password=#Foggy38515825");
+        }
     }
 }
