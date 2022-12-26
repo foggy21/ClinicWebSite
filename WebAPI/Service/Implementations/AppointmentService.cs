@@ -44,7 +44,7 @@ namespace Service.Implementations
                 }
                 
 
-                if (listOfDates.Any())
+                if (!listOfDates.Any())
                 {
                     result.Description = "No free dates";
                     result.StatusCode = StatusCode.NotFound;
@@ -76,7 +76,7 @@ namespace Service.Implementations
             {
                 var listOfFreeDates = GetFreeDatesForSpecialization(doctor.Specialization);
 
-                if (listOfFreeDates.Value == null || !listOfFreeDates.Value.Any())
+                if (listOfFreeDates.Value == null)
                 {
                     result.Description = "List of date is empty";
                     result.StatusCode = StatusCode.BadRequest;

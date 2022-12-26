@@ -1,48 +1,66 @@
-﻿using Domain.Entities;
+﻿using DAL.Converts;
+using Domain.Entities;
 using Domain.RepositoryInterfaces;
 
 namespace DAL.Repositories
 {
     public class DoctorRepository : IDoctorRepository
     {
+
+        private readonly ApplicationDbContext _db;
+
+        public DoctorRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public void Create(Doctor entity)
         {
-            throw new NotImplementedException();
+            _db.Add(entity);
+            _db.SaveChanges();
         }
 
         public Doctor CreateDoctor(string? name, Specialization specialization)
         {
-            throw new NotImplementedException();
+            Doctor doctor = new(name, specialization);
+            _db.Add(doctor);
+            _db.SaveChanges();
+            return doctor;
         }
 
         public void Delete(Doctor entity)
         {
-            throw new NotImplementedException();
+            _db.Remove(entity);
+            _db.SaveChanges();
         }
 
         public Doctor FindDoctorById(int? id)
         {
-            throw new NotImplementedException();
+            var doctor = _db.Doctor.FirstOrDefault(doc => doc.Id == id);
+            return doctor?.ToDomain();
         }
 
         public Doctor FindDoctorBySpecialization(Specialization specialization)
         {
-            throw new NotImplementedException();
+            var doctor = _db.Doctor.FirstOrDefault(doc => doc.specialization.ToDomain() == specialization);
+            return doctor?.ToDomain();
         }
 
         public Doctor Get(int id)
         {
-            throw new NotImplementedException();
+            var doctor = _db.Doctor.FirstOrDefault(doc => doc.Id == id);
+            return doctor?.ToDomain();
         }
 
         public IEnumerable<Doctor> Select()
         {
-            throw new NotImplementedException();
+            return (IEnumerable<Doctor>)_db.Doctor.ToList();
         }
 
         public void Update(Doctor entity)
         {
-            throw new NotImplementedException();
+            _db.Update(entity);
+            _db.SaveChanges();
         }
     }
 }
